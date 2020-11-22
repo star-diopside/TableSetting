@@ -1,4 +1,4 @@
-﻿namespace TableSetting
+﻿namespace TableSetting.Forms
 {
     partial class EditConnectionStringDialog
     {

@@ -25,9 +25,9 @@ namespace TableSetting.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::TableSetting.ApplicationSettings ApplicationSettings {
+        public global::TableSetting.Models.ApplicationSettings ApplicationSettings {
             get {
-                return ((global::TableSetting.ApplicationSettings)(this["ApplicationSettings"]));
+                return ((global::TableSetting.Models.ApplicationSettings)(this["ApplicationSettings"]));
             }
             set {
                 this["ApplicationSettings"] = value;

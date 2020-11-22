@@ -7,8 +7,9 @@ using System.IO.Compression;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using TableSetting.Models;
 
-namespace TableSetting
+namespace TableSetting.Forms
 {
     public partial class MainForm : Form
     {
@@ -108,7 +109,7 @@ namespace TableSetting
             columnType.HeaderText = "型";
             columnType.ValueType = typeof(DbType);
             columnType.SortMode = DataGridViewColumnSortMode.NotSortable;
-            columnType.AutoSizeMode= DataGridViewAutoSizeColumnMode.Fill;
+            columnType.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             BindingSource source = new BindingSource();
             foreach (DbType type in Enum.GetValues(typeof(DbType)))

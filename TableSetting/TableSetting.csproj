@@ -49,28 +49,28 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\TableSetting\ApplicationSettings.cs" />
-    <Compile Include="src\TableSetting\ConnectionSetting.cs" />
-    <Compile Include="src\TableSetting\DbTypeUtil.cs" />
-    <Compile Include="src\TableSetting\EditConnectionStringDialog.cs">
+    <Compile Include="Models\ApplicationSettings.cs" />
+    <Compile Include="Models\ConnectionSetting.cs" />
+    <Compile Include="Models\DbTypeUtil.cs" />
+    <Compile Include="Forms\EditConnectionStringDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\TableSetting\EditConnectionStringDialog.Designer.cs">
+    <Compile Include="Forms\EditConnectionStringDialog.Designer.cs">
       <DependentUpon>EditConnectionStringDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\TableSetting\MainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\TableSetting\MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\TableSetting\Program.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="src\TableSetting\EditConnectionStringDialog.resx">
+    <EmbeddedResource Include="Forms\EditConnectionStringDialog.resx">
       <SubType>Designer</SubType>
       <DependentUpon>EditConnectionStringDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\TableSetting\MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

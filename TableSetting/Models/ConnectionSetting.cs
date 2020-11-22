@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TableSetting
+namespace TableSetting.Models
 {
     /// <summary>
     /// データベース接続文字列に設定する各項目の値を表すクラス

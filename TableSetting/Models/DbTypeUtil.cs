@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 
-namespace TableSetting
+namespace TableSetting.Models
 {
     public static class DbTypeUtil
     {

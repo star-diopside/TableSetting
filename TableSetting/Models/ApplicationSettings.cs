@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TableSetting
+namespace TableSetting.Models
 {
     /// <summary>
     /// アプリケーションの設定値を表すクラス

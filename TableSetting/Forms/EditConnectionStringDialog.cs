@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace TableSetting
+namespace TableSetting.Forms
 {
     public partial class EditConnectionStringDialog : Form
     {

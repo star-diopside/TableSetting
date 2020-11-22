@@ -1,4 +1,4 @@
-using System.Windows.Forms;
+ï»¿using System.Windows.Forms;
 
 namespace TableSetting
 {
@@ -10,7 +10,7 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// İ’è‚ğs‚¤ƒL[‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+        /// è¨­å®šã‚’è¡Œã†ã‚­ãƒ¼ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         public string Key
         {
@@ -25,7 +25,7 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// İ’è‚ğs‚¤’l‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+        /// è¨­å®šã‚’è¡Œã†å€¤ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         public string Value
         {
@@ -40,7 +40,7 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// İ’è‚µ‚½ƒL[‚Æ’l‚ğ—LŒø‚É‚·‚é‚©‚Ç‚¤‚©‚ğ¦‚·’l‚ğæ“¾‚Ü‚½‚Íİ’è‚µ‚Ü‚·B
+        /// è¨­å®šã—ãŸã‚­ãƒ¼ã¨å€¤ã‚’æœ‰åŠ¹ã«ã™ã‚‹ã‹ã©ã†ã‹ã‚’ç¤ºã™å€¤ã‚’å–å¾—ã¾ãŸã¯è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         public bool EnableItem
         {

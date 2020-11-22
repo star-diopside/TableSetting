@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -19,14 +19,14 @@ namespace TableSetting
         {
             InitializeComponent();
 
-            // ƒtƒHƒ“ƒg‚ğİ’è‚·‚é
+            // ãƒ•ã‚©ãƒ³ãƒˆã‚’è¨­å®šã™ã‚‹
             this.Font = SystemInformation.MenuFont;
         }
 
         /// <summary>
-        /// ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‘S‘Ì‚Ìİ’è’l‚ğ•œŒ³‚·‚é
+        /// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³å…¨ä½“ã®è¨­å®šå€¤ã‚’å¾©å…ƒã™ã‚‹
         /// </summary>
-        /// <param name="settings">ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Ìİ’è’l‚ğ•\‚· ApplicationSettings ƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX</param>
+        /// <param name="settings">ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®è¨­å®šå€¤ã‚’è¡¨ã™ ApplicationSettings ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹</param>
         private void RestoreApplicationSettings(ApplicationSettings settings)
         {
             comboDbProvider.SelectedValue = settings.DbProviderName;
@@ -45,9 +45,9 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‘S‘Ì‚Ìİ’è’l‚ğæ“¾‚·‚é
+        /// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³å…¨ä½“ã®è¨­å®šå€¤ã‚’å–å¾—ã™ã‚‹
         /// </summary>
-        /// <returns>ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Ìİ’è’l‚ğ•\‚· ApplicationSettings ƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX</returns>
+        /// <returns>ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®è¨­å®šå€¤ã‚’è¡¨ã™ ApplicationSettings ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹</returns>
         private ApplicationSettings DumpApplicationSettings()
         {
             ApplicationSettings appSettings = new ApplicationSettings();
@@ -73,7 +73,7 @@ namespace TableSetting
         {
             base.OnLoad(e);
 
-            // ƒRƒ“ƒgƒ[ƒ‹‚Ì’²®‚ğs‚¤
+            // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã®èª¿æ•´ã‚’è¡Œã†
             SetupComponent();
 
             comboDbProvider.DataSource = DbProviderFactories.GetFactoryClasses();
@@ -84,28 +84,28 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìİ’è‚ğs‚¤
+        /// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®è¨­å®šã‚’è¡Œã†
         /// </summary>
         private void SetupComponent()
         {
-            // ƒRƒ“ƒgƒ[ƒ‹‚ÌˆÊ’u‚ğ’²®‚·‚é
+            // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã®ä½ç½®ã‚’èª¿æ•´ã™ã‚‹
             comboDbProvider.Left = labelDbProvider.Right + 8;
             comboDbProvider.Width = comboDbProvider.Parent.Width - 9 - comboDbProvider.Left;
             labelDbProvider.Top = comboDbProvider.Top + (comboDbProvider.Height - labelDbProvider.Height) / 2;
 
-            // SQLƒpƒ‰ƒ[ƒ^“ü—Í‚ÉŠÖ‚·‚éİ’è‚ğs‚¤
+            // SQLãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å…¥åŠ›ã«é–¢ã™ã‚‹è¨­å®šã‚’è¡Œã†
             DataGridViewTextBoxColumn columnName = new DataGridViewTextBoxColumn();
             DataGridViewComboBoxColumn columnType = new DataGridViewComboBoxColumn();
             DataGridViewTextBoxColumn columnValue = new DataGridViewTextBoxColumn();
 
             columnName.Name = "name";
-            columnName.HeaderText = "ƒpƒ‰ƒ[ƒ^";
+            columnName.HeaderText = "ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿";
             columnName.ValueType = typeof(string);
             columnName.SortMode = DataGridViewColumnSortMode.NotSortable;
             columnName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             columnType.Name = "type";
-            columnType.HeaderText = "Œ^";
+            columnType.HeaderText = "å‹";
             columnType.ValueType = typeof(DbType);
             columnType.SortMode = DataGridViewColumnSortMode.NotSortable;
             columnType.AutoSizeMode= DataGridViewAutoSizeColumnMode.Fill;
@@ -118,7 +118,7 @@ namespace TableSetting
             columnType.DataSource = source;
 
             columnValue.Name = "value";
-            columnValue.HeaderText = "’l";
+            columnValue.HeaderText = "å€¤";
             columnValue.ValueType = typeof(string);
             columnValue.SortMode = DataGridViewColumnSortMode.NotSortable;
             columnValue.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -135,7 +135,7 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// ƒtƒH[ƒ€‚ğ•Â‚¶‚éƒCƒxƒ“ƒg
+        /// ãƒ•ã‚©ãƒ¼ãƒ ã‚’é–‰ã˜ã‚‹ã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         private void FormCloseEvent(object sender, EventArgs e)
         {
@@ -143,7 +143,7 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// DataGridViewƒRƒ“ƒgƒ[ƒ‹‚És‚ğ’Ç‰Á‚µ‚½‚Æ‚«‚É”­¶‚·‚éƒCƒxƒ“ƒg
+        /// DataGridViewã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã«è¡Œã‚’è¿½åŠ ã—ãŸã¨ãã«ç™ºç”Ÿã™ã‚‹ã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         private void AddedRowsDataGridViewEvent(object sender, DataGridViewRowsAddedEventArgs e)
         {
@@ -151,27 +151,27 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// SQLÀsƒCƒxƒ“ƒg
+        /// SQLå®Ÿè¡Œã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         private void ExecuteSqlEvent(object sender, EventArgs e)
         {
             StringBuilder output = new StringBuilder();
 
-            // ƒJ[ƒ\ƒ‹‚ğ‘Ò‹@ƒJ[ƒ\ƒ‹‚É‚·‚é
+            // ã‚«ãƒ¼ã‚½ãƒ«ã‚’å¾…æ©Ÿã‚«ãƒ¼ã‚½ãƒ«ã«ã™ã‚‹
             Cursor.Current = Cursors.WaitCursor;
 
             try
             {
                 this._factory = DbProviderFactories.GetFactory(((DataRowView)comboDbProvider.SelectedItem).Row);
 
-                output.AppendFormat("ƒf[ƒ^ƒx[ƒXƒvƒƒoƒCƒ_ƒtƒ@ƒNƒgƒŠ‚ÌƒNƒ‰ƒXŒ^: {0}", this._factory.GetType().ToString());
+                output.AppendFormat("ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ãƒ—ãƒ­ãƒã‚¤ãƒ€ãƒ•ã‚¡ã‚¯ãƒˆãƒªã®ã‚¯ãƒ©ã‚¹å‹: {0}", this._factory.GetType().ToString());
                 output.AppendLine().AppendLine();
 
 
-                // Ú‘±•¶š—ñ‚ğ¶¬‚·‚é
+                // æ¥ç¶šæ–‡å­—åˆ—ã‚’ç”Ÿæˆã™ã‚‹
                 DbConnectionStringBuilder csb = this._factory.CreateConnectionStringBuilder();
 
-                output.AppendFormat("Ú‘±•¶š—ñƒrƒ‹ƒ_‚ÌƒNƒ‰ƒXŒ^: {0}", csb.GetType().ToString());
+                output.AppendFormat("æ¥ç¶šæ–‡å­—åˆ—ãƒ“ãƒ«ãƒ€ã®ã‚¯ãƒ©ã‚¹å‹: {0}", csb.GetType().ToString());
                 output.AppendLine();
 
                 foreach (ListViewItem item in listViewConnectionString.CheckedItems)
@@ -179,19 +179,19 @@ namespace TableSetting
                     csb[item.Text] = item.SubItems[1].Text;
                 }
 
-                output.AppendFormat("Ú‘±•¶š—ñ: {0}", csb.ConnectionString);
+                output.AppendFormat("æ¥ç¶šæ–‡å­—åˆ—: {0}", csb.ConnectionString);
                 output.AppendLine().AppendLine();
 
 
-                // ƒf[ƒ^ƒx[ƒX‚©‚çƒf[ƒ^‚ğæ“¾‚·‚é
+                // ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
                 DbConnection conn = this._factory.CreateConnection();
                 DbCommand cmd = conn.CreateCommand();
                 DataTable dataTable = new DataTable();
                 this._adapter = this._factory.CreateDataAdapter();
 
-                output.AppendFormat("ƒf[ƒ^ƒx[ƒXÚ‘±ƒIƒuƒWƒFƒNƒg‚ÌƒNƒ‰ƒXŒ^: {0}", conn.GetType().ToString());
+                output.AppendFormat("ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹æ¥ç¶šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¯ãƒ©ã‚¹å‹: {0}", conn.GetType().ToString());
                 output.AppendLine();
-                output.AppendFormat("ƒf[ƒ^ƒAƒ_ƒvƒ^‚ÌƒNƒ‰ƒXŒ^: {0}", this._adapter.GetType().ToString());
+                output.AppendFormat("ãƒ‡ãƒ¼ã‚¿ã‚¢ãƒ€ãƒ—ã‚¿ã®ã‚¯ãƒ©ã‚¹å‹: {0}", this._adapter.GetType().ToString());
                 output.AppendLine().AppendLine();
 
                 conn.ConnectionString = csb.ConnectionString;
@@ -222,7 +222,7 @@ namespace TableSetting
                 dataGridViewTable.DataMember = string.Empty;
 
 
-                output.AppendFormat("< {0} > ƒf[ƒ^æ“¾‚Í³í‚ÉŠ®—¹‚µ‚Ü‚µ‚½B", System.DateTime.Now);
+                output.AppendFormat("< {0} > ãƒ‡ãƒ¼ã‚¿å–å¾—ã¯æ­£å¸¸ã«å®Œäº†ã—ã¾ã—ãŸã€‚", System.DateTime.Now);
                 output.AppendLine();
 
                 textOutput.Text = output.ToString();
@@ -233,7 +233,7 @@ namespace TableSetting
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, "ƒGƒ‰[", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, ex.Message, "ã‚¨ãƒ©ãƒ¼", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 output.AppendLine();
                 output.AppendLine(ex.ToString());
                 textOutput.Text = output.ToString();
@@ -243,13 +243,13 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// XVSQLƒRƒ}ƒ“ƒhŠm”FƒCƒxƒ“ƒg
+        /// æ›´æ–°SQLã‚³ãƒãƒ³ãƒ‰ç¢ºèªã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         private void CheckUpdateCommandEvent(object sender, EventArgs e)
         {
             StringBuilder output = new StringBuilder();
 
-            // ƒJ[ƒ\ƒ‹‚ğ‘Ò‹@ƒJ[ƒ\ƒ‹‚É‚·‚é
+            // ã‚«ãƒ¼ã‚½ãƒ«ã‚’å¾…æ©Ÿã‚«ãƒ¼ã‚½ãƒ«ã«ã™ã‚‹
             Cursor.Current = Cursors.WaitCursor;
 
             try
@@ -261,13 +261,13 @@ namespace TableSetting
             {
                 StringBuilder error = new StringBuilder();
 
-                MessageBox.Show(this, ex.Message, "ƒGƒ‰[", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, ex.Message, "ã‚¨ãƒ©ãƒ¼", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 error.AppendLine(ex.ToString());
 
                 if (output.Length > 0)
                 {
                     error.AppendLine().AppendLine();
-                    error.AppendLine("<<<< —áŠO‚ª”­¶‚·‚é‘O‚Éo—Í‚³‚ê‚½•¶š—ñ >>>>");
+                    error.AppendLine("<<<< ä¾‹å¤–ãŒç™ºç”Ÿã™ã‚‹å‰ã«å‡ºåŠ›ã•ã‚ŒãŸæ–‡å­—åˆ— >>>>");
                     error.AppendLine(output.ToString());
                 }
 
@@ -276,13 +276,13 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// XVÀsƒCƒxƒ“ƒg
+        /// æ›´æ–°å®Ÿè¡Œã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         private void ExecuteUpdateEvent(object sender, EventArgs e)
         {
             StringBuilder output = new StringBuilder();
 
-            // ƒJ[ƒ\ƒ‹‚ğ‘Ò‹@ƒJ[ƒ\ƒ‹‚É‚·‚é
+            // ã‚«ãƒ¼ã‚½ãƒ«ã‚’å¾…æ©Ÿã‚«ãƒ¼ã‚½ãƒ«ã«ã™ã‚‹
             Cursor.Current = Cursors.WaitCursor;
 
             try
@@ -301,10 +301,10 @@ namespace TableSetting
 
                     CreateUpdateCommand(this._factory, this._adapter, output);
 
-                    // ƒf[ƒ^ƒx[ƒX‚ÌXV‚ğs‚¤
+                    // ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®æ›´æ–°ã‚’è¡Œã†
                     countUpdate = this._adapter.Update((DataTable)dataGridViewTable.DataSource);
 
-                    // ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚ğƒRƒ~ƒbƒg‚·‚é
+                    // ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚’ã‚³ãƒŸãƒƒãƒˆã™ã‚‹
                     tran.Commit();
                 }
                 catch (Exception)
@@ -313,12 +313,12 @@ namespace TableSetting
                     {
                         try
                         {
-                            // ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚ğƒ[ƒ‹ƒoƒbƒN‚·‚é
+                            // ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚’ãƒ­ãƒ¼ãƒ«ãƒãƒƒã‚¯ã™ã‚‹
                             tran.Rollback();
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(this, ex.Message, "ƒGƒ‰[", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(this, ex.Message, "ã‚¨ãƒ©ãƒ¼", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
 
@@ -333,20 +333,20 @@ namespace TableSetting
                 }
 
                 textOutput.Text = output.ToString();
-                MessageBox.Show(this, countUpdate.ToString() + " ŒXV‚³‚ê‚Ü‚µ‚½", "î•ñ",
+                MessageBox.Show(this, countUpdate.ToString() + " ä»¶æ›´æ–°ã•ã‚Œã¾ã—ãŸ", "æƒ…å ±",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 StringBuilder error = new StringBuilder();
 
-                MessageBox.Show(this, ex.Message, "ƒGƒ‰[", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, ex.Message, "ã‚¨ãƒ©ãƒ¼", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 error.AppendLine(ex.ToString());
 
                 if (output.Length > 0)
                 {
                     error.AppendLine().AppendLine();
-                    error.AppendLine("<<<< —áŠO‚ª”­¶‚·‚é‘O‚Éo—Í‚³‚ê‚½•¶š—ñ >>>>");
+                    error.AppendLine("<<<< ä¾‹å¤–ãŒç™ºç”Ÿã™ã‚‹å‰ã«å‡ºåŠ›ã•ã‚ŒãŸæ–‡å­—åˆ— >>>>");
                     error.AppendLine(output.ToString());
                 }
 
@@ -355,25 +355,25 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// XVŒnSQL‚Ì©“®¶¬‚ğs‚¤
+        /// æ›´æ–°ç³»SQLã®è‡ªå‹•ç”Ÿæˆã‚’è¡Œã†
         /// </summary>
-        /// <param name="factory">ƒf[ƒ^æ“¾‚Éw’è‚³‚ê‚½ƒf[ƒ^ƒvƒƒoƒCƒ_‚ÌDbProviderFactory</param>
-        /// <param name="adapter">ƒf[ƒ^æ“¾‚É¶¬‚µ‚½DbDataAdapter</param>
-        /// <param name="log">ÀsƒƒOo—Íæ‚ÌStringBuilder</param>
+        /// <param name="factory">ãƒ‡ãƒ¼ã‚¿å–å¾—æ™‚ã«æŒ‡å®šã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ãƒ—ãƒ­ãƒã‚¤ãƒ€ã®DbProviderFactory</param>
+        /// <param name="adapter">ãƒ‡ãƒ¼ã‚¿å–å¾—æ™‚ã«ç”Ÿæˆã—ãŸDbDataAdapter</param>
+        /// <param name="log">å®Ÿè¡Œãƒ­ã‚°å‡ºåŠ›å…ˆã®StringBuilder</param>
         private static void CreateUpdateCommand(DbProviderFactory factory, DbDataAdapter adapter, StringBuilder log)
         {
-            // CommandBuilder‚ğ¶¬‚µADbDataAdapter‚ÉŠÖ˜A•t‚¯‚é
+            // CommandBuilderã‚’ç”Ÿæˆã—ã€DbDataAdapterã«é–¢é€£ä»˜ã‘ã‚‹
             DbCommandBuilder cb = factory.CreateCommandBuilder();
             cb.DataAdapter = adapter;
 
-            log.AppendFormat("< {0} ƒNƒ‰ƒX‚ÌƒIƒuƒWƒFƒNƒg‚É‚æ‚Á‚Ä“®“I‚É¶¬‚³‚ê‚½ SQL >", cb.GetType().ToString());
+            log.AppendFormat("< {0} ã‚¯ãƒ©ã‚¹ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚ˆã£ã¦å‹•çš„ã«ç”Ÿæˆã•ã‚ŒãŸ SQL >", cb.GetType().ToString());
             log.AppendLine();
 
-            // INSERT•¶‚ğ¶¬‚·‚é
-            log.AppendLine("INSERT SQL ƒRƒ}ƒ“ƒh:");
+            // INSERTæ–‡ã‚’ç”Ÿæˆã™ã‚‹
+            log.AppendLine("INSERT SQL ã‚³ãƒãƒ³ãƒ‰:");
             log.AppendLine(cb.GetInsertCommand().CommandText);
             log.AppendLine();
-            log.AppendLine("INSERT SQL ƒRƒ}ƒ“ƒh ƒpƒ‰ƒ[ƒ^:");
+            log.AppendLine("INSERT SQL ã‚³ãƒãƒ³ãƒ‰ ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿:");
             foreach (DbParameter param in cb.GetInsertCommand().Parameters)
             {
                 log.AppendFormat("{0} => DbType = {1}, SourceColumn = {2}", param.ParameterName, param.DbType, param.SourceColumn);
@@ -381,11 +381,11 @@ namespace TableSetting
             }
             log.AppendLine().AppendLine();
 
-            // UPDATE•¶‚ğ¶¬‚·‚é
-            log.AppendLine("UPDATE SQL ƒRƒ}ƒ“ƒh:");
+            // UPDATEæ–‡ã‚’ç”Ÿæˆã™ã‚‹
+            log.AppendLine("UPDATE SQL ã‚³ãƒãƒ³ãƒ‰:");
             log.AppendLine(cb.GetUpdateCommand().CommandText);
             log.AppendLine();
-            log.AppendLine("UPDATE SQL ƒRƒ}ƒ“ƒh ƒpƒ‰ƒ[ƒ^:");
+            log.AppendLine("UPDATE SQL ã‚³ãƒãƒ³ãƒ‰ ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿:");
             foreach (DbParameter param in cb.GetUpdateCommand().Parameters)
             {
                 log.AppendFormat("{0} => DbType = {1}, SourceColumn = {2}", param.ParameterName, param.DbType, param.SourceColumn);
@@ -393,11 +393,11 @@ namespace TableSetting
             }
             log.AppendLine().AppendLine();
 
-            // DELETE•¶‚ğ¶¬‚·‚é
-            log.AppendLine("DELETE SQL ƒRƒ}ƒ“ƒh:");
+            // DELETEæ–‡ã‚’ç”Ÿæˆã™ã‚‹
+            log.AppendLine("DELETE SQL ã‚³ãƒãƒ³ãƒ‰:");
             log.AppendLine(cb.GetDeleteCommand().CommandText);
             log.AppendLine();
-            log.AppendLine("DELETE SQL ƒRƒ}ƒ“ƒh ƒpƒ‰ƒ[ƒ^:");
+            log.AppendLine("DELETE SQL ã‚³ãƒãƒ³ãƒ‰ ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿:");
             foreach (DbParameter param in cb.GetDeleteCommand().Parameters)
             {
                 log.AppendFormat("{0} => DbType = {1}, SourceColumn = {2}", param.ParameterName, param.DbType, param.SourceColumn);
@@ -406,7 +406,7 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// Ú‘±•¶š—ñİ’è’l’Ç‰ÁƒCƒxƒ“ƒg
+        /// æ¥ç¶šæ–‡å­—åˆ—è¨­å®šå€¤è¿½åŠ ã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -414,7 +414,7 @@ namespace TableSetting
         {
             EditConnectionStringDialog dialog = new EditConnectionStringDialog();
 
-            dialog.Text = "€–Ú‚Ì’Ç‰Á";
+            dialog.Text = "é …ç›®ã®è¿½åŠ ";
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
                 ListViewItem listItem = listViewConnectionString.Items.Add(dialog.Key);
@@ -424,13 +424,13 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// Ú‘±•¶š—ñİ’è’l•ÒWƒCƒxƒ“ƒg
+        /// æ¥ç¶šæ–‡å­—åˆ—è¨­å®šå€¤ç·¨é›†ã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         private void ConnectionItemEditEvent(object sender, EventArgs e)
         {
             if (listViewConnectionString.SelectedItems.Count == 0)
             {
-                MessageBox.Show(this, "•ÒW‚·‚é€–Ú‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢B", "Œx",
+                MessageBox.Show(this, "ç·¨é›†ã™ã‚‹é …ç›®ã‚’é¸æŠã—ã¦ãã ã•ã„ã€‚", "è­¦å‘Š",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -438,7 +438,7 @@ namespace TableSetting
             ListViewItem listItem = listViewConnectionString.SelectedItems[0];
             EditConnectionStringDialog dialog = new EditConnectionStringDialog();
 
-            dialog.Text = "€–Ú‚Ì•ÒW";
+            dialog.Text = "é …ç›®ã®ç·¨é›†";
             dialog.Key = listItem.Text;
             dialog.Value = listItem.SubItems[1].Text;
             dialog.EnableItem = listItem.Checked;
@@ -451,18 +451,18 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// Ú‘±•¶š—ñİ’è’líœƒCƒxƒ“ƒg
+        /// æ¥ç¶šæ–‡å­—åˆ—è¨­å®šå€¤å‰Šé™¤ã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         private void ConnectionItemDeleteEvent(object sender, EventArgs e)
         {
             if (listViewConnectionString.SelectedItems.Count == 0)
             {
-                MessageBox.Show(this, "íœ‚·‚é€–Ú‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢B", "Œx",
+                MessageBox.Show(this, "å‰Šé™¤ã™ã‚‹é …ç›®ã‚’é¸æŠã—ã¦ãã ã•ã„ã€‚", "è­¦å‘Š",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (MessageBox.Show(this, "‘I‘ğ‚³‚ê‚½€–Ú‚ğíœ‚µ‚Ä‚à‚æ‚ë‚µ‚¢‚Å‚·‚©H", "Šm”F",
+            if (MessageBox.Show(this, "é¸æŠã•ã‚ŒãŸé …ç›®ã‚’å‰Šé™¤ã—ã¦ã‚‚ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ", "ç¢ºèª",
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 listViewConnectionString.Items.Remove(listViewConnectionString.SelectedItems[0]);
@@ -470,7 +470,7 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// Ú‘±•¶š—ñİ’è’l‚Ìİ’èƒRƒ“ƒgƒ[ƒ‹‘I‘ğ•ÏX‚ÌƒCƒxƒ“ƒg
+        /// æ¥ç¶šæ–‡å­—åˆ—è¨­å®šå€¤ã®è¨­å®šã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é¸æŠå¤‰æ›´æ™‚ã®ã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         private void listViewConnectionString_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -479,7 +479,7 @@ namespace TableSetting
         }
 
         /// <summary>
-        /// İ’èƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚ŞƒCƒxƒ“ƒg
+        /// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€ã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         private void OpenSettingEvent(object sender, EventArgs e)
         {
@@ -487,7 +487,7 @@ namespace TableSetting
             {
                 OpenFileDialog dialog = new OpenFileDialog();
 
-                dialog.Filter = "İ’èƒtƒ@ƒCƒ‹ (*.dat)|*.dat|‚·‚×‚Ä‚Ìƒtƒ@ƒCƒ‹ (*.*)|*.*";
+                dialog.Filter = "è¨­å®šãƒ•ã‚¡ã‚¤ãƒ« (*.dat)|*.dat|ã™ã¹ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ« (*.*)|*.*";
 
                 if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
@@ -500,12 +500,12 @@ namespace TableSetting
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, "ƒGƒ‰[", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, ex.Message, "ã‚¨ãƒ©ãƒ¼", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         /// <summary>
-        /// İ’èƒtƒ@ƒCƒ‹‚ğ•Û‘¶‚·‚éƒCƒxƒ“ƒg
+        /// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜ã™ã‚‹ã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         private void SaveSettingEvent(object sender, EventArgs e)
         {
@@ -513,7 +513,7 @@ namespace TableSetting
             {
                 SaveFileDialog dialog = new SaveFileDialog();
 
-                dialog.Filter = "İ’èƒtƒ@ƒCƒ‹ (*.dat)|*.dat|‚·‚×‚Ä‚Ìƒtƒ@ƒCƒ‹ (*.*)|*.*";
+                dialog.Filter = "è¨­å®šãƒ•ã‚¡ã‚¤ãƒ« (*.dat)|*.dat|ã™ã¹ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ« (*.*)|*.*";
 
                 if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
@@ -527,12 +527,12 @@ namespace TableSetting
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, "ƒGƒ‰[", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, ex.Message, "ã‚¨ãƒ©ãƒ¼", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         /// <summary>
-        /// ƒƒOo—Í‚ğƒtƒ@ƒCƒ‹‚É•Û‘¶‚·‚éƒCƒxƒ“ƒg
+        /// ãƒ­ã‚°å‡ºåŠ›ã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã«ä¿å­˜ã™ã‚‹ã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         private void SaveOutputLogEvent(object sender, EventArgs e)
         {
@@ -540,7 +540,7 @@ namespace TableSetting
             {
                 SaveFileDialog dialog = new SaveFileDialog();
 
-                dialog.Filter = "ƒƒO ƒtƒ@ƒCƒ‹ (*.log)|*.log|‚·‚×‚Ä‚Ìƒtƒ@ƒCƒ‹ (*.*)|*.*";
+                dialog.Filter = "ãƒ­ã‚° ãƒ•ã‚¡ã‚¤ãƒ« (*.log)|*.log|ã™ã¹ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ« (*.*)|*.*";
 
                 if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
@@ -552,12 +552,12 @@ namespace TableSetting
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, "ƒGƒ‰[", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, ex.Message, "ã‚¨ãƒ©ãƒ¼", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         /// <summary>
-        /// ƒ[ƒJƒ‹‚Å‚Ì•ÏX‚ğƒ[ƒ‹ƒoƒbƒN‚·‚éB
+        /// ãƒ­ãƒ¼ã‚«ãƒ«ã§ã®å¤‰æ›´ã‚’ãƒ­ãƒ¼ãƒ«ãƒãƒƒã‚¯ã™ã‚‹ã€‚
         /// </summary>
         private void RollbackChangesEvent(object sender, EventArgs e)
         {

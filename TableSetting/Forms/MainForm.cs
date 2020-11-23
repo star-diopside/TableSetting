@@ -19,9 +19,6 @@ namespace TableSetting.Forms
         public MainForm()
         {
             InitializeComponent();
-
-            // フォントを設定する
-            this.Font = SystemInformation.MenuFont;
         }
 
         /// <summary>
@@ -78,7 +75,7 @@ namespace TableSetting.Forms
             SetupComponent();
 
             comboDbProvider.DataSource = DbProviderFactories.GetFactoryClasses();
-            comboDbProvider.DisplayMember = "Name";
+            comboDbProvider.DisplayMember = "InvariantName";
             comboDbProvider.ValueMember = "AssemblyQualifiedName";
 
             RestoreApplicationSettings(Properties.Settings.Default.ApplicationSettings);

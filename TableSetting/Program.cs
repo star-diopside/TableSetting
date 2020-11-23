@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Npgsql;
+using System;
+using System.Data.Common;
 using System.Windows.Forms;
 using TableSetting.Forms;
 
@@ -12,8 +14,9 @@ namespace TableSetting
         [STAThread]
         static void Main()
         {
-            ToolStripManager.VisualStylesEnabled = false;
+            DbProviderFactories.RegisterFactory("Npgsql", NpgsqlFactory.Instance);
 
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

@@ -74,7 +74,10 @@ namespace TableSetting.Forms
             // コントロールの調整を行う
             SetupComponent();
 
-            comboDbProvider.DataSource = DbProviderFactories.GetFactoryClasses();
+            comboDbProvider.DataSource = DbProviderFactories.GetFactoryClasses()
+                                                            .AsEnumerable()
+                                                            .OrderBy(row => row.Field<string>("InvariantName"))
+                                                            .AsDataView();
             comboDbProvider.DisplayMember = "InvariantName";
             comboDbProvider.ValueMember = "AssemblyQualifiedName";
 

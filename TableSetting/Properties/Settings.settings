@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TableSetting.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ApplicationSettings" Type="TableSetting.ApplicationSettings" Scope="User">
+    <Setting Name="ApplicationSettings" Type="TableSetting.Models.ApplicationSettings" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

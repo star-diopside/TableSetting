@@ -39,37 +39,37 @@
             // 
             // textKey
             // 
-            this.textKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textKey.Location = new System.Drawing.Point(60, 12);
+            this.textKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textKey.Location = new System.Drawing.Point(80, 20);
             this.textKey.Name = "textKey";
-            this.textKey.Size = new System.Drawing.Size(220, 19);
+            this.textKey.Size = new System.Drawing.Size(292, 27);
             this.textKey.TabIndex = 1;
             // 
             // textValue
             // 
-            this.textValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textValue.Location = new System.Drawing.Point(60, 37);
+            this.textValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textValue.Location = new System.Drawing.Point(80, 62);
             this.textValue.Name = "textValue";
-            this.textValue.Size = new System.Drawing.Size(220, 19);
+            this.textValue.Size = new System.Drawing.Size(292, 27);
             this.textValue.TabIndex = 3;
             // 
             // labelKey
             // 
             this.labelKey.AutoSize = true;
-            this.labelKey.Location = new System.Drawing.Point(12, 15);
+            this.labelKey.Location = new System.Drawing.Point(16, 25);
             this.labelKey.Name = "labelKey";
-            this.labelKey.Size = new System.Drawing.Size(42, 12);
+            this.labelKey.Size = new System.Drawing.Size(52, 20);
             this.labelKey.TabIndex = 0;
             this.labelKey.Text = "キー(&K):";
             // 
             // labelValue
             // 
             this.labelValue.AutoSize = true;
-            this.labelValue.Location = new System.Drawing.Point(19, 40);
+            this.labelValue.Location = new System.Drawing.Point(25, 67);
             this.labelValue.Name = "labelValue";
-            this.labelValue.Size = new System.Drawing.Size(35, 12);
+            this.labelValue.Size = new System.Drawing.Size(46, 20);
             this.labelValue.TabIndex = 2;
             this.labelValue.Text = "値(&V):";
             // 
@@ -78,9 +78,9 @@
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.buttonOK.Location = new System.Drawing.Point(124, 84);
+            this.buttonOK.Location = new System.Drawing.Point(165, 140);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.Size = new System.Drawing.Size(100, 38);
             this.buttonOK.TabIndex = 5;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -90,9 +90,9 @@
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.buttonCancel.Location = new System.Drawing.Point(205, 84);
+            this.buttonCancel.Location = new System.Drawing.Point(273, 140);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.Size = new System.Drawing.Size(100, 38);
             this.buttonCancel.TabIndex = 6;
             this.buttonCancel.Text = "キャンセル";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -103,9 +103,9 @@
             this.checkEnableItem.Checked = true;
             this.checkEnableItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkEnableItem.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.checkEnableItem.Location = new System.Drawing.Point(12, 62);
+            this.checkEnableItem.Location = new System.Drawing.Point(16, 103);
             this.checkEnableItem.Name = "checkEnableItem";
-            this.checkEnableItem.Size = new System.Drawing.Size(244, 17);
+            this.checkEnableItem.Size = new System.Drawing.Size(306, 25);
             this.checkEnableItem.TabIndex = 4;
             this.checkEnableItem.Text = "接続文字列生成時にこの項目を使用する(&E)";
             this.checkEnableItem.UseVisualStyleBackColor = true;
@@ -113,10 +113,10 @@
             // EditConnectionStringDialog
             // 
             this.AcceptButton = this.buttonOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(292, 119);
+            this.ClientSize = new System.Drawing.Size(389, 198);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.checkEnableItem);

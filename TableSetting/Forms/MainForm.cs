@@ -542,8 +542,7 @@ namespace TableSetting.Forms
 
                 if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
-                    using var writer = new StreamWriter(dialog.FileName, false, Encoding.Default);
-                    writer.Write(textOutput.Text);
+                    File.WriteAllText(dialog.FileName, textOutput.Text);
                 }
             }
             catch (Exception ex)

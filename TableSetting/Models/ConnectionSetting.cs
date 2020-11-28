@@ -11,28 +11,16 @@ namespace TableSetting.Models
         /// <summary>
         /// 設定項目のキー名を取得または設定する
         /// </summary>
-        public string Key
-        {
-            get;
-            set;
-        }
+        public string Key { get; set; } = string.Empty;
 
         /// <summary>
         /// 設定項目の値を取得または設定する
         /// </summary>
-        public string Value
-        {
-            get;
-            set;
-        }
+        public string Value { get; set; } = string.Empty;
 
         /// <summary>
         /// 設定項目が有効であるかどうかを示す値を取得または設定する
         /// </summary>
-        public bool Enable
-        {
-            get;
-            set;
-        }
+        public bool Enable { get; set; }
     }
 }

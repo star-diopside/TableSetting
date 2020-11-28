@@ -12,19 +12,11 @@ namespace TableSetting.Models
         /// <summary>
         /// データプロバイダ名を取得または設定する。
         /// </summary>
-        public string DbProviderName
-        {
-            get;
-            set;
-        }
+        public string DbProviderName { get; set; } = string.Empty;
 
         /// <summary>
         /// データベース接続文字列に設定する値のリストを取得または設定する。
         /// </summary>
-        public List<ConnectionSetting> ConnectionSettings
-        {
-            get;
-            set;
-        }
+        public List<ConnectionSetting> ConnectionSettings { get; set; } = new();
     }
 }

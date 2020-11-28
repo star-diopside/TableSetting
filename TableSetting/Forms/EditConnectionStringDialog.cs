@@ -14,14 +14,8 @@ namespace TableSetting.Forms
         /// </summary>
         public string Key
         {
-            get
-            {
-                return textKey.Text;
-            }
-            set
-            {
-                textKey.Text = value;
-            }
+            get => textKey.Text;
+            set => textKey.Text = value;
         }
 
         /// <summary>
@@ -29,14 +23,8 @@ namespace TableSetting.Forms
         /// </summary>
         public string Value
         {
-            get
-            {
-                return textValue.Text;
-            }
-            set
-            {
-                textValue.Text = value;
-            }
+            get => textValue.Text;
+            set => textValue.Text = value;
         }
 
         /// <summary>
@@ -44,14 +32,8 @@ namespace TableSetting.Forms
         /// </summary>
         public bool EnableItem
         {
-            get
-            {
-                return checkEnableItem.Checked;
-            }
-            set
-            {
-                checkEnableItem.Checked = value;
-            }
+            get => checkEnableItem.Checked;
+            set => checkEnableItem.Checked = value;
         }
     }
 }

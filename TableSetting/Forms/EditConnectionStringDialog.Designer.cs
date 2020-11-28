@@ -58,7 +58,7 @@
             // labelKey
             // 
             this.labelKey.AutoSize = true;
-            this.labelKey.Location = new System.Drawing.Point(16, 25);
+            this.labelKey.Location = new System.Drawing.Point(19, 23);
             this.labelKey.Name = "labelKey";
             this.labelKey.Size = new System.Drawing.Size(52, 20);
             this.labelKey.TabIndex = 0;
@@ -67,7 +67,7 @@
             // labelValue
             // 
             this.labelValue.AutoSize = true;
-            this.labelValue.Location = new System.Drawing.Point(25, 67);
+            this.labelValue.Location = new System.Drawing.Point(25, 65);
             this.labelValue.Name = "labelValue";
             this.labelValue.Size = new System.Drawing.Size(46, 20);
             this.labelValue.TabIndex = 2;

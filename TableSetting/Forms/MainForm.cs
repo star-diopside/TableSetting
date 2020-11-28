@@ -274,7 +274,7 @@ namespace TableSetting.Forms
         /// </summary>
         private void ExecuteUpdateEvent(object sender, EventArgs e)
         {
-            if (_factory is null || _adapter is null || _adapter.SelectCommand is null || _adapter.SelectCommand.Connection is null)
+            if (_factory is null || _adapter?.SelectCommand?.Connection is null)
             {
                 throw new InvalidOperationException();
             }
@@ -308,20 +308,14 @@ namespace TableSetting.Forms
                 }
                 catch (Exception)
                 {
-                    try
-                    {
-                        // トランザクションをロールバックする
-                        tran?.Rollback();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(this, ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    // トランザクションをロールバックする
+                    tran?.Rollback();
 
                     throw;
                 }
                 finally
                 {
+                    _adapter.SelectCommand.Transaction = null;
                     conn?.Close();
                 }
 
@@ -498,7 +492,7 @@ namespace TableSetting.Forms
                     }
                     else
                     {
-                        throw new InvalidOperationException("ファイルフォーマットが不正です。");
+                        throw new InvalidDataException();
                     }
                 }
             }

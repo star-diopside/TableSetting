@@ -17,6 +17,11 @@ namespace TableSetting
         [STAThread]
         static void Main()
         {
+            Application.ThreadException += (_, e) =>
+            {
+                MessageBox.Show(e.Exception.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            };
+
             DbProviderFactories.RegisterFactory("Odbc", OdbcFactory.Instance);
             DbProviderFactories.RegisterFactory("OleDb", OleDbFactory.Instance);
             DbProviderFactories.RegisterFactory("SqlClient", SqlClientFactory.Instance);

@@ -40,7 +40,7 @@ namespace TableSetting.Models
             DbType.Xml => throw new NotImplementedException(),
             DbType.DateTime2 => DateTime.Parse(source),
             DbType.DateTimeOffset => DateTimeOffset.Parse(source),
-            _ => throw new ArgumentException("Invalid enum value: " + type, nameof(type))
+            _ => throw new ArgumentOutOfRangeException(nameof(type))
         };
     }
 }

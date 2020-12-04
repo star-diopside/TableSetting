@@ -222,10 +222,7 @@ namespace TableSetting.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                output.AppendLine("<<例外が発生する前に出力された文字列>>")
-                      .AppendLine(ex.ToString());
-                textOutput.Text = output.ToString();
+                HandleException(ex, output);
                 buttonCheckUpdateCommand.Enabled = false;
                 buttonExecuteUpdate.Enabled = false;
             }
@@ -253,19 +250,7 @@ namespace TableSetting.Forms
             }
             catch (Exception ex)
             {
-                var error = new StringBuilder();
-
-                MessageBox.Show(this, ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                error.AppendLine(ex.ToString());
-
-                if (output.Length > 0)
-                {
-                    error.AppendLine()
-                         .AppendLine("<<例外が発生する前に出力された文字列>>")
-                         .AppendLine(output.ToString());
-                }
-
-                textOutput.Text = error.ToString();
+                HandleException(ex, output);
             }
         }
 
@@ -325,20 +310,30 @@ namespace TableSetting.Forms
             }
             catch (Exception ex)
             {
-                var error = new StringBuilder();
-
-                MessageBox.Show(this, ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                error.AppendLine(ex.ToString());
-
-                if (output.Length > 0)
-                {
-                    error.AppendLine()
-                         .AppendLine("<<例外が発生する前に出力された文字列>>")
-                         .AppendLine(output.ToString());
-                }
-
-                textOutput.Text = error.ToString();
+                HandleException(ex, output);
             }
+        }
+
+        /// <summary>
+        /// 例外発生時の処理を行う
+        /// </summary>
+        /// <param name="e">発生した例外</param>
+        /// <param name="log">例外発生前に編集した出力文字列</param>
+        private void HandleException(Exception e, StringBuilder log)
+        {
+            MessageBox.Show(this, e.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            var error = new StringBuilder(e.ToString());
+
+            if (log.Length > 0)
+            {
+                error.AppendLine()
+                     .AppendLine()
+                     .AppendLine("<<例外が発生する前に出力された文字列>>")
+                     .AppendLine(log.ToString());
+            }
+
+            textOutput.Text = error.ToString();
         }
 
         /// <summary>

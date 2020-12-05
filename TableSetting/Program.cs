@@ -1,11 +1,11 @@
-﻿using Microsoft.Data.Sqlite;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using Npgsql;
 using System;
 using System.Data.Common;
 using System.Data.Odbc;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Windows.Forms;
 using TableSetting.Forms;
 
@@ -29,7 +29,7 @@ namespace TableSetting
             DbProviderFactories.RegisterFactory("SqlClient", SqlClientFactory.Instance);
             DbProviderFactories.RegisterFactory("Npgsql", NpgsqlFactory.Instance);
             DbProviderFactories.RegisterFactory("MySqlClient", MySqlClientFactory.Instance);
-            DbProviderFactories.RegisterFactory("Sqlite", SqliteFactory.Instance);
+            DbProviderFactories.RegisterFactory("SQLite", SQLiteFactory.Instance);
 
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();

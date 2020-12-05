@@ -1,4 +1,6 @@
-﻿using Npgsql;
+﻿using Microsoft.Data.Sqlite;
+using MySql.Data.MySqlClient;
+using Npgsql;
 using System;
 using System.Data.Common;
 using System.Data.Odbc;
@@ -26,6 +28,8 @@ namespace TableSetting
             DbProviderFactories.RegisterFactory("OleDb", OleDbFactory.Instance);
             DbProviderFactories.RegisterFactory("SqlClient", SqlClientFactory.Instance);
             DbProviderFactories.RegisterFactory("Npgsql", NpgsqlFactory.Instance);
+            DbProviderFactories.RegisterFactory("MySqlClient", MySqlClientFactory.Instance);
+            DbProviderFactories.RegisterFactory("Sqlite", SqliteFactory.Instance);
 
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();

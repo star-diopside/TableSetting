@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using TableSetting.Models;
@@ -141,12 +142,20 @@ namespace TableSetting.Forms
         /// <summary>
         /// SQL実行イベント
         /// </summary>
-        private void ExecuteSqlEvent(object sender, EventArgs e)
+        private async void ExecuteSqlEvent(object sender, EventArgs e)
         {
             var output = new StringBuilder();
 
             // カーソルを待機カーソルにする
             Cursor.Current = Cursors.WaitCursor;
+
+            dataGridViewTable.DataSource = null;
+            dataGridViewTable.Columns.Clear();
+
+            buttonExecuteSql.Enabled = false;
+            buttonRollback.Enabled = false;
+            buttonCheckUpdateCommand.Enabled = false;
+            buttonExecuteUpdate.Enabled = false;
 
             try
             {
@@ -212,14 +221,22 @@ namespace TableSetting.Forms
                     conn.ConnectionString = csb.ConnectionString;
                     _adapter.SelectCommand.Connection = conn;
 
-                    var dataTable = new DataTable();
-                    _adapter.Fill(dataTable);
+                    try
+                    {
+                        await conn.OpenAsync();
 
-                    dataGridViewTable.Columns.Clear();
-                    dataGridViewTable.DataSource = dataTable;
-                    dataGridViewTable.DataMember = string.Empty;
+                        var dataTable = new DataTable();
+                        await Task.Run(() => _adapter.Fill(dataTable));
 
-                    scope.Complete();
+                        dataGridViewTable.DataSource = dataTable;
+                        dataGridViewTable.DataMember = string.Empty;
+
+                        scope.Complete();
+                    }
+                    finally
+                    {
+                        await conn.CloseAsync();
+                    }
                 }
 
                 output.AppendFormat("[{0}] データ取得は正常に完了しました。", DateTime.Now)
@@ -234,8 +251,10 @@ namespace TableSetting.Forms
             catch (Exception ex)
             {
                 HandleException(ex, output);
-                buttonCheckUpdateCommand.Enabled = false;
-                buttonExecuteUpdate.Enabled = false;
+            }
+            finally
+            {
+                buttonExecuteSql.Enabled = true;
             }
         }
 
@@ -268,7 +287,7 @@ namespace TableSetting.Forms
         /// <summary>
         /// 更新実行イベント
         /// </summary>
-        private void ExecuteUpdateEvent(object sender, EventArgs e)
+        private async void ExecuteUpdateEvent(object sender, EventArgs e)
         {
             if (_factory is null || _adapter?.SelectCommand?.Connection is null)
             {
@@ -288,18 +307,19 @@ namespace TableSetting.Forms
                 {
                     try
                     {
-                        _adapter.SelectCommand.Connection.Open();
+                        await _adapter.SelectCommand.Connection.OpenAsync();
                         CreateUpdateCommand(_factory, _adapter, output);
 
                         // データベースの更新を行う
-                        countUpdate = _adapter.Update((DataTable)dataGridViewTable.DataSource);
+                        var dataTable = (DataTable)dataGridViewTable.DataSource;
+                        countUpdate = await Task.Run(() => _adapter.Update(dataTable));
 
                         // トランザクションをコミットする
                         scope.Complete();
                     }
                     finally
                     {
-                        _adapter.SelectCommand.Connection.Close();
+                        await _adapter.SelectCommand.Connection.CloseAsync();
                     }
                 }
 

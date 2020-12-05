@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using TableSetting.Models;
@@ -171,21 +172,11 @@ namespace TableSetting.Forms
                       .AppendLine();
 
                 // データベースからデータを取得する
-                var conn = _factory.CreateConnection() ?? throw new NotImplementedException();
-                var cmd = conn.CreateCommand();
-                var dataTable = new DataTable();
                 _adapter = _factory.CreateDataAdapter() ?? throw new NotImplementedException();
 
-                output.AppendFormat("データベース接続オブジェクトのクラス型: {0}", conn.GetType())
-                      .AppendLine()
-                      .AppendFormat("データアダプタのクラス型: {0}", _adapter.GetType())
+                output.AppendFormat("データアダプタのクラス型: {0}", _adapter.GetType())
                       .AppendLine()
                       .AppendLine();
-
-                conn.ConnectionString = csb.ConnectionString;
-
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = textSql.Text;
 
                 DbParameter ToDbParameter(DataGridViewRow row)
                 {
@@ -202,9 +193,24 @@ namespace TableSetting.Forms
                 var parameters = from DataGridViewRow row in dataGridViewParameter.Rows
                                  where !row.IsNewRow
                                  select ToDbParameter(row);
+
+                var cmd = _factory.CreateCommand() ?? throw new NotImplementedException();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = textSql.Text;
                 cmd.Parameters.AddRange(parameters.ToArray());
 
                 _adapter.SelectCommand = cmd;
+
+                var conn = _factory.CreateConnection() ?? throw new NotImplementedException();
+
+                output.AppendFormat("データベース接続オブジェクトのクラス型: {0}", conn.GetType())
+                      .AppendLine()
+                      .AppendLine();
+
+                conn.ConnectionString = csb.ConnectionString;
+                _adapter.SelectCommand.Connection = conn;
+
+                var dataTable = new DataTable();
                 _adapter.Fill(dataTable);
 
                 dataGridViewTable.Columns.Clear();
@@ -233,15 +239,15 @@ namespace TableSetting.Forms
         /// </summary>
         private void CheckUpdateCommandEvent(object sender, EventArgs e)
         {
-            if (_factory is null || _adapter is null)
+            if (_factory is null || _adapter?.SelectCommand?.Connection is null)
             {
                 throw new InvalidOperationException();
             }
 
-            var output = new StringBuilder();
-
             // カーソルを待機カーソルにする
             Cursor.Current = Cursors.WaitCursor;
+
+            var output = new StringBuilder();
 
             try
             {
@@ -264,44 +270,32 @@ namespace TableSetting.Forms
                 throw new InvalidOperationException();
             }
 
-            var output = new StringBuilder();
-
             // カーソルを待機カーソルにする
             Cursor.Current = Cursors.WaitCursor;
 
+            var output = new StringBuilder();
+
             try
             {
-                DbConnection? conn = null;
-                DbTransaction? tran = null;
                 int countUpdate;
 
-                try
+                using (var scope = new TransactionScope())
                 {
-                    conn = _adapter.SelectCommand.Connection;
-                    conn.Open();
+                    try
+                    {
+                        _adapter.SelectCommand.Connection.Open();
+                        CreateUpdateCommand(_factory, _adapter, output);
 
-                    tran = conn.BeginTransaction();
-                    _adapter.SelectCommand.Transaction = tran;
+                        // データベースの更新を行う
+                        countUpdate = _adapter.Update((DataTable)dataGridViewTable.DataSource);
 
-                    CreateUpdateCommand(_factory, _adapter, output);
-
-                    // データベースの更新を行う
-                    countUpdate = _adapter.Update((DataTable)dataGridViewTable.DataSource);
-
-                    // トランザクションをコミットする
-                    tran.Commit();
-                }
-                catch (Exception)
-                {
-                    // トランザクションをロールバックする
-                    tran?.Rollback();
-
-                    throw;
-                }
-                finally
-                {
-                    _adapter.SelectCommand.Transaction = null;
-                    conn?.Close();
+                        // トランザクションをコミットする
+                        scope.Complete();
+                    }
+                    finally
+                    {
+                        _adapter.SelectCommand.Connection.Close();
+                    }
                 }
 
                 textOutput.Text = output.ToString();
@@ -352,35 +346,32 @@ namespace TableSetting.Forms
                .AppendLine();
 
             // INSERT文を生成する
-            log.AppendLine("INSERT SQL コマンド:")
-               .AppendLine(cb.GetInsertCommand().CommandText)
-               .AppendLine()
-               .AppendLine("INSERT SQL コマンド パラメータ:");
-            foreach (DbParameter param in cb.GetInsertCommand().Parameters)
-            {
-                log.AppendFormat("{0} => DbType = {1}, SourceColumn = {2}", param.ParameterName, param.DbType, param.SourceColumn)
-                   .AppendLine();
-            }
+            CheckCommand(cb.GetInsertCommand(), "INSERT", log);
             log.AppendLine();
 
             // UPDATE文を生成する
-            log.AppendLine("UPDATE SQL コマンド:")
-               .AppendLine(cb.GetUpdateCommand().CommandText)
-               .AppendLine()
-               .AppendLine("UPDATE SQL コマンド パラメータ:");
-            foreach (DbParameter param in cb.GetUpdateCommand().Parameters)
-            {
-                log.AppendFormat("{0} => DbType = {1}, SourceColumn = {2}", param.ParameterName, param.DbType, param.SourceColumn)
-                   .AppendLine();
-            }
+            CheckCommand(cb.GetUpdateCommand(), "UPDATE", log);
             log.AppendLine();
 
             // DELETE文を生成する
-            log.AppendLine("DELETE SQL コマンド:")
-               .AppendLine(cb.GetDeleteCommand().CommandText)
-               .AppendLine()
-               .AppendLine("DELETE SQL コマンド パラメータ:");
-            foreach (DbParameter param in cb.GetDeleteCommand().Parameters)
+            CheckCommand(cb.GetDeleteCommand(), "DELETE", log);
+        }
+
+        /// <summary>
+        /// SQLコマンドの内容を確認する
+        /// </summary>
+        /// <param name="command">SQLコマンド</param>
+        /// <param name="sqlType">SQLタイプ(INSERT, UPDATE, DELETE)</param>
+        /// <param name="log">実行ログ出力先のStringBuilder</param>
+        private static void CheckCommand(DbCommand command, string sqlType, StringBuilder log)
+        {
+            log.AppendFormat("{0} SQL コマンド:", sqlType)
+                .AppendLine()
+                .AppendLine(command.CommandText)
+                .AppendLine()
+                .AppendFormat("{0} SQL コマンド パラメータ:", sqlType)
+                .AppendLine();
+            foreach (DbParameter param in command.Parameters)
             {
                 log.AppendFormat("{0} => DbType = {1}, SourceColumn = {2}", param.ParameterName, param.DbType, param.SourceColumn)
                    .AppendLine();

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace TableSetting.Models
+namespace TableSetting.Services
 {
     public static class DbTypeUtil
     {

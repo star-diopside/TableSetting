@@ -5,11 +5,11 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
-using System.Transactions;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using TableSetting.Models;
 using TableSetting.Properties;
+using TableSetting.Services;
 
 namespace TableSetting.Forms
 {
@@ -201,21 +201,26 @@ namespace TableSetting.Forms
 
                 _adapter.SelectCommand = cmd;
 
-                var conn = _factory.CreateConnection() ?? throw new NotImplementedException();
+                using (var scope = TransactionScopeFactory.CreateTransactionScope())
+                {
+                    var conn = _factory.CreateConnection() ?? throw new NotImplementedException();
 
-                output.AppendFormat("データベース接続オブジェクトのクラス型: {0}", conn.GetType())
-                      .AppendLine()
-                      .AppendLine();
+                    output.AppendFormat("データベース接続オブジェクトのクラス型: {0}", conn.GetType())
+                          .AppendLine()
+                          .AppendLine();
 
-                conn.ConnectionString = csb.ConnectionString;
-                _adapter.SelectCommand.Connection = conn;
+                    conn.ConnectionString = csb.ConnectionString;
+                    _adapter.SelectCommand.Connection = conn;
 
-                var dataTable = new DataTable();
-                _adapter.Fill(dataTable);
+                    var dataTable = new DataTable();
+                    _adapter.Fill(dataTable);
 
-                dataGridViewTable.Columns.Clear();
-                dataGridViewTable.DataSource = dataTable;
-                dataGridViewTable.DataMember = string.Empty;
+                    dataGridViewTable.Columns.Clear();
+                    dataGridViewTable.DataSource = dataTable;
+                    dataGridViewTable.DataMember = string.Empty;
+
+                    scope.Complete();
+                }
 
                 output.AppendFormat("[{0}] データ取得は正常に完了しました。", DateTime.Now)
                       .AppendLine();
@@ -279,7 +284,7 @@ namespace TableSetting.Forms
             {
                 int countUpdate;
 
-                using (var scope = new TransactionScope())
+                using (var scope = TransactionScopeFactory.CreateTransactionScope())
                 {
                     try
                     {

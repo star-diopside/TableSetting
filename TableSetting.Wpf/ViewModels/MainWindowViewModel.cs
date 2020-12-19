@@ -19,6 +19,7 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TableSetting.Wpf.Models;
@@ -70,13 +71,6 @@ namespace TableSetting.Wpf.ViewModels
             DbProviderFactories.RegisterFactory("MySqlClient", MySqlClientFactory.Instance);
             DbProviderFactories.RegisterFactory("SQLite", SQLiteFactory.Instance);
 
-            ReactiveCommand ToReactiveCommand(Action execute, IObservable<bool> canExecute)
-            {
-                var command = canExecute.ToReactiveCommand();
-                command.Subscribe(execute).AddTo(_disposable);
-                return command;
-            }
-
             DbProviders = DbProviderFactories.GetFactoryClasses()
                                              .AsEnumerable()
                                              .Select(row => row.Field<string>("InvariantName") ?? string.Empty)
@@ -87,14 +81,23 @@ namespace TableSetting.Wpf.ViewModels
             ConnectionSettings.AddRange(Settings.Default.ApplicationSettings.ConnectionSettings);
 
             ClosedWindowCommand = new DelegateCommand(ClosedWindow);
-            OpenFileCommand = new DelegateCommand(OpenFile);
-            SaveFileCommand = new DelegateCommand(SaveFile);
+            OpenFileCommand = new AsyncReactiveCommand().WithSubscribe(OpenFileAsync).AddTo(_disposable);
+            SaveFileCommand = new AsyncReactiveCommand().WithSubscribe(SaveFileAsync).AddTo(_disposable);
             SaveLogFileCommand = new DelegateCommand(SaveLogFile);
             AddConnectionStringItemCommand = new DelegateCommand(AddConnectionStringItem);
-            EditConnectionStringItemCommand = ToReactiveCommand(EditConnectionStringItem, SelectedConnectionSetting.Select(s => s is not null));
-            RemoveConnectionStringItemCommand = ToReactiveCommand(RemoveConnectionStringItem, SelectedConnectionSetting.Select(s => s is not null));
+            EditConnectionStringItemCommand = SelectedConnectionSetting.Select(s => s is not null)
+                                                                       .ToReactiveCommand()
+                                                                       .WithSubscribe(EditConnectionStringItem)
+                                                                       .AddTo(_disposable);
+            RemoveConnectionStringItemCommand = SelectedConnectionSetting.Select(s => s is not null)
+                                                                         .ToReactiveCommand()
+                                                                         .WithSubscribe(RemoveConnectionStringItem)
+                                                                         .AddTo(_disposable);
             ResetConnectionSettingsCommand = new DelegateCommand(ResetConnectionSettings);
-            CheckConnectCommand = ToReactiveCommand(CheckConnect, SelectedDbProvider.Select(s => s is not null));
+            CheckConnectCommand = SelectedDbProvider.Select(s => s is not null)
+                                                    .ToAsyncReactiveCommand()
+                                                    .WithSubscribe(CheckConnectAsync)
+                                                    .AddTo(_disposable);
         }
 
         public void Dispose()
@@ -112,7 +115,7 @@ namespace TableSetting.Wpf.ViewModels
             Settings.Default.Save();
         }
 
-        private void OpenFile()
+        private async Task OpenFileAsync()
         {
             string? file = _openFileService.SelectOpenFile(new FileFilter[]
             {
@@ -122,7 +125,7 @@ namespace TableSetting.Wpf.ViewModels
 
             if (file is not null)
             {
-                var bytes = File.ReadAllBytes(file);
+                var bytes = await File.ReadAllBytesAsync(file);
                 var settings = JsonSerializer.Deserialize<ApplicationSettings>(bytes) ?? throw new InvalidDataException();
 
                 SelectedDbProvider.Value = settings.DbProviderName;
@@ -131,7 +134,7 @@ namespace TableSetting.Wpf.ViewModels
             }
         }
 
-        private void SaveFile()
+        private async Task SaveFileAsync()
         {
             string? file = _saveFileService.SelectSaveFile(new FileFilter[]
             {
@@ -147,7 +150,7 @@ namespace TableSetting.Wpf.ViewModels
                     ConnectionSettings = ConnectionSettings.ToList()
                 };
 
-                File.WriteAllBytes(file, JsonSerializer.SerializeToUtf8Bytes(settings, new()
+                await File.WriteAllBytesAsync(file, JsonSerializer.SerializeToUtf8Bytes(settings, new()
                 {
                     WriteIndented = true
                 }));
@@ -231,7 +234,7 @@ namespace TableSetting.Wpf.ViewModels
             }
         }
 
-        private void CheckConnect()
+        private async Task CheckConnectAsync()
         {
             if (SelectedDbProvider.Value is null)
             {
@@ -249,8 +252,8 @@ namespace TableSetting.Wpf.ViewModels
 
             connection.ConnectionString = builder.ConnectionString;
 
-            DbSchema.Value = connection.GetSchema();
-            DbTables.Value = connection.GetSchema("Tables");
+            DbSchema.Value = await connection.GetSchemaAsync();
+            DbTables.Value = await connection.GetSchemaAsync("Tables");
         }
     }
 }

@@ -27,14 +27,10 @@ namespace TableSetting.Wpf.ViewModels
 
         public EditConnectionStringViewModel()
         {
-            ReactiveCommand ToReactiveCommand(Action execute, IObservable<bool> canExecute)
-            {
-                var command = canExecute.ToReactiveCommand();
-                command.Subscribe(execute).AddTo(_disposable);
-                return command;
-            }
-
-            OKCommand = ToReactiveCommand(OK, Key.Select(s => !string.IsNullOrEmpty(s)));
+            OKCommand = Key.Select(s => !string.IsNullOrEmpty(s))
+                           .ToReactiveCommand()
+                           .WithSubscribe(OK)
+                           .AddTo(_disposable);
             CancelCommand = new DelegateCommand(Cancel);
         }
 

@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using MySql.Data.MySqlClient;
-using Npgsql;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
@@ -11,10 +9,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Common;
-using System.Data.Odbc;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -67,13 +61,6 @@ namespace TableSetting.Wpf.ViewModels
             _openFileService = openFileService;
             _saveFileService = saveFileService;
             _messageBoxService = messageBoxService;
-
-            DbProviderFactories.RegisterFactory("Odbc", OdbcFactory.Instance);
-            DbProviderFactories.RegisterFactory("OleDb", OleDbFactory.Instance);
-            DbProviderFactories.RegisterFactory("SqlClient", SqlClientFactory.Instance);
-            DbProviderFactories.RegisterFactory("Npgsql", NpgsqlFactory.Instance);
-            DbProviderFactories.RegisterFactory("MySqlClient", MySqlClientFactory.Instance);
-            DbProviderFactories.RegisterFactory("SQLite", SQLiteFactory.Instance);
 
             DbProviders = DbProviderFactories.GetFactoryClasses()
                                              .AsEnumerable()

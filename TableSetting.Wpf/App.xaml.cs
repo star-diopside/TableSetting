@@ -1,4 +1,6 @@
-﻿using Prism.Ioc;
+﻿using Microsoft.Extensions.Logging;
+using Prism.Ioc;
+using Prism.Unity;
 using Serilog;
 using Serilog.Events;
 using System;
@@ -8,6 +10,8 @@ using System.Windows;
 using System.Windows.Threading;
 using TableSetting.Wpf.Services;
 using TableSetting.Wpf.Views;
+using Unity;
+using Unity.Microsoft.Logging;
 
 namespace TableSetting.Wpf
 {
@@ -20,12 +24,12 @@ namespace TableSetting.Wpf
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
                                     "logs",
-                                    Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location),
-                                    "error.log");
+                                    Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location));
 
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Error()
-                .WriteTo.File(path, restrictedToMinimumLevel: LogEventLevel.Error, rollingInterval: RollingInterval.Day)
+                .MinimumLevel.Debug()
+                .WriteTo.File(Path.Combine(path, "debug.log"), restrictedToMinimumLevel: LogEventLevel.Debug, rollingInterval: RollingInterval.Day)
+                .WriteTo.File(Path.Combine(path, "error.log"), restrictedToMinimumLevel: LogEventLevel.Error, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
         }
 
@@ -36,6 +40,7 @@ namespace TableSetting.Wpf
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.GetContainer().AddExtension(new LoggingExtension(new LoggerFactory().AddSerilog()));
             containerRegistry.RegisterDialog<EditConnectionString>();
             containerRegistry.RegisterSingleton<IOpenFileService, OpenFileService>();
             containerRegistry.RegisterSingleton<ISaveFileService, SaveFileService>();

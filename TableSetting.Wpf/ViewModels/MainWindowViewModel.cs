@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.Extensions.Logging;
+using MySql.Data.MySqlClient;
 using Npgsql;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -32,6 +33,7 @@ namespace TableSetting.Wpf.ViewModels
     public class MainWindowViewModel : BindableBase, IDisposable
     {
         private readonly CompositeDisposable _disposable = new();
+        private readonly ILogger<MainWindowViewModel> _logger;
         private readonly IDialogService _dialogService;
         private readonly IOpenFileService _openFileService;
         private readonly ISaveFileService _saveFileService;
@@ -54,11 +56,13 @@ namespace TableSetting.Wpf.ViewModels
         public ICommand ResetConnectionSettingsCommand { get; }
         public ICommand CheckConnectCommand { get; }
 
-        public MainWindowViewModel(IDialogService dialogService,
+        public MainWindowViewModel(ILogger<MainWindowViewModel> logger,
+                                   IDialogService dialogService,
                                    IOpenFileService openFileService,
                                    ISaveFileService saveFileService,
                                    IMessageBoxService messageBoxService)
         {
+            _logger = logger;
             _dialogService = dialogService;
             _openFileService = openFileService;
             _saveFileService = saveFileService;
@@ -251,6 +255,8 @@ namespace TableSetting.Wpf.ViewModels
             }
 
             connection.ConnectionString = builder.ConnectionString;
+
+            _logger.LogDebug("Connection: {@Connection}", connection);
 
             DbSchema.Value = await connection.GetSchemaAsync();
             DbTables.Value = await connection.GetSchemaAsync("Tables");

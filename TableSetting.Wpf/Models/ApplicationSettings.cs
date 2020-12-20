@@ -26,7 +26,7 @@ namespace TableSetting.Wpf.Models
                 if (_dbProviderName != value)
                 {
                     _dbProviderName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DbProviderName)));
+                    PropertyChanged?.Invoke(this, new(nameof(DbProviderName)));
                 }
             }
         }
@@ -42,7 +42,7 @@ namespace TableSetting.Wpf.Models
                 if (_connectionSettings != value)
                 {
                     _connectionSettings = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ConnectionSettings)));
+                    PropertyChanged?.Invoke(this, new(nameof(ConnectionSettings)));
                 }
             }
         }

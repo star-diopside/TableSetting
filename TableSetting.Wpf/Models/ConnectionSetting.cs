@@ -26,7 +26,7 @@ namespace TableSetting.Wpf.Models
                 if (_key != value)
                 {
                     _key = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Key)));
+                    PropertyChanged?.Invoke(this, new(nameof(Key)));
                 }
             }
         }
@@ -42,7 +42,7 @@ namespace TableSetting.Wpf.Models
                 if (_value != value)
                 {
                     _value = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
+                    PropertyChanged?.Invoke(this, new(nameof(Value)));
                 }
             }
         }
@@ -58,7 +58,7 @@ namespace TableSetting.Wpf.Models
                 if (_enable != value)
                 {
                     _enable = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Enable)));
+                    PropertyChanged?.Invoke(this, new(nameof(Enable)));
                 }
             }
         }

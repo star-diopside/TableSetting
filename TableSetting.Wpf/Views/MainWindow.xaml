@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="Images.xaml"/>
                 <ResourceDictionary Source="Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <local:Enums x:Key="Enums"/>
         </ResourceDictionary>
     </Window.Resources>
     <behaviors:Interaction.Triggers>
@@ -123,12 +124,18 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Label Content="実行SQL(_S):"/>
-                    <TextBox Grid.Row="1" Grid.RowSpan="2" Style="{StaticResource MultilineTextBox}"/>
+                    <TextBox Grid.Row="1" Grid.RowSpan="2" Text="{Binding Sql.Value}" Style="{StaticResource MultilineTextBox}"/>
                     <GridSplitter Grid.Column="1" Grid.RowSpan="3" Width="4"/>
                     <Label Grid.Column="2" Content="SQLパラメータ(_P):"/>
-                    <DataGrid Grid.Row="1" Grid.Column="2"/>
+                    <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding SqlParameters}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="パラメータ" Width="*" Binding="{Binding Name}"/>
+                            <DataGridComboBoxColumn Header="型" Width="*" ItemsSource="{Binding DbTypes, Source={StaticResource Enums}}" SelectedValueBinding="{Binding Type}" SelectedValuePath="Key" DisplayMemberPath="Value"/>
+                            <DataGridTextColumn Header="値" Width="*" Binding="{Binding Value}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                     <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,4,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Content="実行"/>
+                        <Button Content="実行" Command="{Binding ExecuteSqlCommand}"/>
                     </StackPanel>
                 </Grid>
                 <GridSplitter Grid.Row="1" Height="4"/>
@@ -137,7 +144,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <DataGrid/>
+                    <DataGrid ItemsSource="{Binding ExecutedResult.Value}"/>
                     <StackPanel Grid.Row="1" Margin="0,4,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Content="変更をロールバックする"/>
                         <Button Content="更新SQLの確認" Margin="4,0,0,0"/>

@@ -39,6 +39,9 @@ namespace TableSetting.Wpf.ViewModels
         public ReactiveProperty<ConnectionSetting?> SelectedConnectionSetting { get; } = new();
         public ReactiveProperty<DataTable> DbSchema { get; } = new();
         public ReactiveProperty<DataTable> DbTables { get; } = new();
+        public ReactiveProperty<string> Sql { get; } = new("SELECT * FROM users");
+        public ObservableCollection<SqlParameter> SqlParameters { get; } = new();
+        public ReactiveProperty<DataTable> ExecutedResult { get; } = new();
 
         public ICommand ClosedWindowCommand { get; }
         public ICommand OpenFileCommand { get; }
@@ -49,6 +52,7 @@ namespace TableSetting.Wpf.ViewModels
         public ICommand RemoveConnectionStringItemCommand { get; }
         public ICommand ResetConnectionSettingsCommand { get; }
         public ICommand CheckConnectCommand { get; }
+        public ICommand ExecuteSqlCommand { get; }
 
         public MainWindowViewModel(ILogger<MainWindowViewModel> logger,
                                    IDialogService dialogService,
@@ -88,6 +92,7 @@ namespace TableSetting.Wpf.ViewModels
                                                     .ToAsyncReactiveCommand()
                                                     .WithSubscribe(CheckConnectAsync)
                                                     .AddTo(_disposable);
+            ExecuteSqlCommand = new AsyncReactiveCommand().WithSubscribe(ExecuteSqlAsync).AddTo(_disposable);
         }
 
         public void Dispose() => _disposable.Dispose();
@@ -248,6 +253,53 @@ namespace TableSetting.Wpf.ViewModels
 
             DbSchema.Value = await connection.GetSchemaAsync();
             DbTables.Value = await connection.GetSchemaAsync("Tables");
+        }
+
+        private async Task ExecuteSqlAsync()
+        {
+            if (SelectedDbProvider.Value is null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            var factory = DbProviderFactories.GetFactory(SelectedDbProvider.Value);
+            var connection = factory.CreateConnection() ?? throw new NotImplementedException();
+            var builder = factory.CreateConnectionStringBuilder() ?? throw new NotImplementedException();
+
+            foreach (var setting in ConnectionSettings.Where(s => s.Enable))
+            {
+                builder[setting.Key] = setting.Value;
+            }
+
+            connection.ConnectionString = builder.ConnectionString;
+
+            _logger.LogDebug("Connection: {@Connection}", connection);
+
+            var adapter = factory.CreateDataAdapter() ?? throw new NotImplementedException();
+            var command = factory.CreateCommand() ?? throw new NotImplementedException();
+
+            command.Connection = connection;
+            command.CommandText = Sql.Value;
+            command.Parameters.AddRange(SqlParameters.Select(p => p.ToDbParameter(factory)).ToArray());
+
+            adapter.SelectCommand = command;
+
+            using var scope = TransactionScopeFactory.CreateTransactionScope();
+
+            try
+            {
+                await connection.OpenAsync();
+
+                var dataTable = new DataTable();
+                await Task.Run(() => adapter.Fill(dataTable));
+                ExecutedResult.Value = dataTable;
+
+                scope.Complete();
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
         }
     }
 }

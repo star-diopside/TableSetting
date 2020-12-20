@@ -47,10 +47,7 @@ namespace TableSetting.Wpf
             DbProviderFactories.RegisterFactory("SQLite", SQLiteFactory.Instance);
         }
 
-        protected override Window CreateShell()
-        {
-            return Container.Resolve<MainWindow>();
-        }
+        protected override Window CreateShell() => Container.Resolve<MainWindow>();
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {

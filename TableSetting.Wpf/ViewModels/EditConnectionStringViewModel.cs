@@ -36,10 +36,7 @@ namespace TableSetting.Wpf.ViewModels
 
         public bool CanCloseDialog() => true;
 
-        public void OnDialogClosed()
-        {
-            _disposable.Dispose();
-        }
+        public void OnDialogClosed() => _disposable.Dispose();
 
         public void OnDialogOpened(IDialogParameters parameters)
         {

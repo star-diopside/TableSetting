@@ -67,7 +67,6 @@ namespace TableSetting.Wpf.ViewModels
                                              .Select(row => row.Field<string>("InvariantName") ?? string.Empty)
                                              .OrderBy(name => name)
                                              .ToList();
-
             SelectedDbProvider.Value = Settings.Default.ApplicationSettings.DbProviderName;
             ConnectionSettings.AddRange(Settings.Default.ApplicationSettings.ConnectionSettings);
 
@@ -91,10 +90,7 @@ namespace TableSetting.Wpf.ViewModels
                                                     .AddTo(_disposable);
         }
 
-        public void Dispose()
-        {
-            _disposable.Dispose();
-        }
+        public void Dispose() => _disposable.Dispose();
 
         private void ClosedWindow()
         {
@@ -150,7 +146,12 @@ namespace TableSetting.Wpf.ViewModels
 
         private void SaveLogFile()
         {
-            _saveFileService.SelectSaveFile();
+            string? file = _saveFileService.SelectSaveFile();
+
+            if (file is not null)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         private void AddConnectionStringItem()

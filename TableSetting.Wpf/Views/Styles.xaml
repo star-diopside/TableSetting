@@ -1,6 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:TableSetting.Wpf.Views">
+    <LinearGradientBrush x:Key="MenuBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
+        <GradientStop Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}" Offset="1"/>
+    </LinearGradientBrush>
+    <Style TargetType="Menu" BasedOn="{StaticResource {x:Type Menu}}">
+        <Setter Property="Background" Value="{StaticResource MenuBrush}"/>
+        <Setter Property="Padding" Value="4,2,0,2"/>
+    </Style>
     <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
         <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>

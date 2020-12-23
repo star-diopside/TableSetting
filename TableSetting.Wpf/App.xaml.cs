@@ -51,7 +51,7 @@ namespace TableSetting.Wpf
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.GetContainer().AddExtension(new LoggingExtension(new LoggerFactory().AddSerilog()));
+            containerRegistry.GetContainer().AddExtension(new LoggingExtension(LoggerFactory.Create(builder => builder.AddSerilog())));
             containerRegistry.RegisterDialog<EditConnectionString>();
             containerRegistry.RegisterSingleton<IOpenFileService, OpenFileService>();
             containerRegistry.RegisterSingleton<ISaveFileService, SaveFileService>();

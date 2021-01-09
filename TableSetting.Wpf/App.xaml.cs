@@ -60,8 +60,8 @@ namespace TableSetting.Wpf
 
         private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
+            Container.Resolve<ILogger<App>>().LogError(e.Exception, e.Exception.Message);
             MessageBox.Show(e.Exception.Message, "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
-            Log.Error(e.Exception, e.Exception.Message);
             e.Handled = true;
         }
     }

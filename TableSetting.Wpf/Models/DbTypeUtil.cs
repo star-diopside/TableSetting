@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Data;
 
 namespace TableSetting.Wpf.Models
@@ -40,7 +41,7 @@ namespace TableSetting.Wpf.Models
             DbType.Xml => throw new NotImplementedException(),
             DbType.DateTime2 => DateTime.Parse(source),
             DbType.DateTimeOffset => DateTimeOffset.Parse(source),
-            _ => throw new ArgumentOutOfRangeException(nameof(type))
+            _ => throw new InvalidEnumArgumentException(nameof(type), (int)type, typeof(DbType))
         };
     }
 }
